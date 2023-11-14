@@ -1,0 +1,14 @@
+<h1>Event Stream Test</h1>
+
+<div>
+    <h2 id="id_time"></h2> 
+</div>
+
+<script type='text/javascript'>
+const evtSource = new EventSource("event-stream");
+evtSource.onmessage = function(event){
+     //イベントを受信した際の処理
+     var timeField = document.getElementById('id_time');
+     timeField.innerHTML = event.data;
+}
+</script>
