@@ -5,10 +5,11 @@
 </div>
 
 <script type='text/javascript'>
-const evtSource = new EventSource("event-stream");
+const evtSource = new EventSource("ssetemp");
 evtSource.onmessage = function(event){
-     //イベントを受信した際の処理
+     let data = JSON.parse(event.data);
      var timeField = document.getElementById('id_time');
-     timeField.innerHTML = event.data;
+     timeField.innerHTML = data.dt;
+     console.log(data)
 }
 </script>
