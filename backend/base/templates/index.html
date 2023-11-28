@@ -1,15 +1,34 @@
 <h1>Event Stream Test</h1>
 
 <div>
-    <h2 id="id_time"></h2> 
+    <div></div>
+    <div class="time"></div>
+    <div></div>
+    <div class="temp"></div>
+    <div></div>
+    <div class="loca"></div>
 </div>
 
 <script type='text/javascript'>
-const evtSource = new EventSource("ssetemp");
+const evtSource = new EventSource("event-stream");
 evtSource.onmessage = function(event){
      let data = JSON.parse(event.data);
-     var timeField = document.getElementById('id_time');
+     var timeField = document.getElementById('time');
      timeField.innerHTML = data.dt;
+     console.log(data)
+}
+const evtSource2 = new EventSource("ssetemp");
+evtSource2.onmessage = function(event){
+     let data = JSON.parse(event.data);
+     var temp = document.getElementById('temp');
+     temp.innerHTML = data.temperature;
+     console.log(data)
+}
+const evtSource3 = new EventSource("sseloca");
+evtSource3.onmessage = function(event){
+     let data = JSON.parse(event.data);
+     var loca = document.getElementById('loca');
+     loca.innerHTML = 'x: ' + data.x + ' | y:' + data.y;
      console.log(data)
 }
 </script>

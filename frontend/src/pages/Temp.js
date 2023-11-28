@@ -1,17 +1,17 @@
 import { useState } from 'react';
 
 const Temp = () => {
-    const [temp, setTemt] = useState();
-    const es = new EventSource("http://127.0.0.1:8000/api/sse/temp")
+    // const [temp, setTemt] = useState();
+    const es = new EventSource("http://126.26.154.136/api/ssetemp")
     es.onmessage = (e) => {
         // setTemt(e.data.dt)
         console.log(e)
     };
     return (
         <div>
-            MAP
+            TEMP
             <br/>
-            {temp}
+            {/* {temp} */}
         </div>
     )
 }
