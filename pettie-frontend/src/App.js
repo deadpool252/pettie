@@ -13,6 +13,7 @@ import Footer from './Components/Footer/Footer'
 import Home from './Home/Home'
 import TemperatureManagement from './TemperatureManagement/index'
 import Bottomnavbar from './Components/Navbar/Bottomnavbar'
+import Location from './Location/Location';
 
 
 const App = () => {
@@ -21,13 +22,13 @@ const App = () => {
      <Navbar/>
     
         <Routes>
-          <Route path="/" element={<Home />} />
           {/* <Route path="/footer" element={<Footer/>} /> */}
           <Route path="/temperature" element={<TemperatureManagement/>} />
           
           {/* <Route path="/" element={<Home />} /> */}
           {/* <Route path="*" element={<NoMatch />} /> */}
           <Route path="/" exact component={Home} />
+          <Route path="/location" element={<Location/>} />
 
         </Routes>
       <Bottomnavbar/>

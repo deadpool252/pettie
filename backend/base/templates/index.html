@@ -1,0 +1,26 @@
+<h1>Event Stream Test</h1>
+
+<div>
+    <div>/api/ssetime</div>
+    <div id="time"></div>
+    <div>/api/sseloca</div>
+    <div id="loca"></div>
+    <div></div>
+    <div id="temp"></div>
+</div>
+<script type='text/javascript'>
+const evtSource = new EventSource("ssetime");
+evtSource.onmessage = function(event){
+     let data = JSON.parse(event.data);
+     var timeField = document.getElementById('time');
+     timeField.innerHTML = data.time;
+     console.log(data)
+}
+const evtSource3 = new EventSource("sseloca");
+evtSource3.onmessage = function(event){
+     let data = JSON.parse(event.data);
+     var loca = document.getElementById('loca');
+     loca.innerHTML = 'x: ' + data.x + ' | y:' + data.y;
+     console.log(data)
+}
+</script>

@@ -34,7 +34,7 @@ const Bottomnavbar = () => {
               </Link>
             </li>
             <li> 
-              <Link  to='#'>
+              <Link  to='/location'>
                 <FaMapLocationDot className='icon'/>
               </Link>
             </li>
