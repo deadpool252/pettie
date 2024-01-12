@@ -13,7 +13,7 @@ const Bottomnavbar = () => {
 
     <>
     
-    <section className='navbottomBarSection' >
+    <section className='z-[1000] navbottomBarSection' >
       <div className='nav_bottom'>
         <div className='navBottom'>
 

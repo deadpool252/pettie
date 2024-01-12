@@ -51,7 +51,7 @@ export default function Location () {
         });
     
     return (position&&
-        <div style={{marginTop: "70px", width: "100%", height: "100%", backgroundColor: "black"}}>
+        <div style={{marginTop: "70px", width: "100%", height: "100%"}}>
             <ToastContainer
                 position="bottom-center"
                 autoClose={false}
@@ -64,7 +64,7 @@ export default function Location () {
                 theme="light"
             />
             <div style={{width:'100%', height: '100%'}}>
-                <MapContainer style={{width:'auto', height: 'auto'}} center={position} zoom={13} scrollWheelZoom={false}>
+                <MapContainer style={{width:'100%', height: '100%'}} center={position} zoom={13} scrollWheelZoom={false}>
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
