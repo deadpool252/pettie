@@ -1,5 +1,8 @@
 import { Marker, Popup, useMap } from 'react-leaflet'
 import { useState, useEffect, useRef } from "react"
+import dog from "../img/dog.png"
+import hos from "../img/hos.png"
+import park from "../img/park.png"
 
 export const Button = ({text, value=null, petPosition=[], others=[], icon=null, isClick=null})=>{
     const map = useMap()
@@ -60,36 +63,51 @@ export const Button = ({text, value=null, petPosition=[], others=[], icon=null, 
 
     return (
         <div style={{
-                color: 'white',
-                fontFamily: 'Arial, Helvetica, sans-serif',
-                backgroundColor: hover ? '#6AA2FC' : '#3383FF',
-                padding: '4px 6px',
-                marginBottom: '15px',
-                borderRadius: '5px',
-                boxShadow: hover ? 'inset 0 0.6em 2em -0.3em rgba(0,0,0,0.15),inset 0 0 0em 0.05em rgba(255,255,255,0.12)' : 'inset 0 -0.6em 1em -0.35em rgba(0,0,0,0.17),inset 0 0.6em 2em -0.3em rgba(255,255,255,0.15),inset 0 0 0em 0.05em rgba(255,255,255,0.12)'
+                display:'flex',
+                justifyContent:'right',
+                alignItems: 'center',
+                marginBottom: value!='park'?'15px':'',
             }}
-            ref={buttonRef}
             onClick={value==='owner' ? handleClickOwner : value==='pet' ? handleClickPet : handleClickOthers}
         >
-            {text}
+            <div style={{
+                    color: 'white',
+                    fontFamily: 'Arial, Helvetica, sans-serif',
+                    fontSize: '18px',
+                    backgroundColor: hover ? '#6AA2FC' : '#3383FF',
+                    padding: '5px 10px',
+                    borderRadius: '5px',
+                    boxShadow: hover ? 'inset 0 0.6em 2em -0.3em rgba(0,0,0,0.15),inset 0 0 0em 0.05em rgba(255,255,255,0.12)' : 'inset 0 -0.6em 1em -0.35em rgba(0,0,0,0.17),inset 0 0.6em 2em -0.3em rgba(255,255,255,0.15),inset 0 0 0em 0.05em rgba(255,255,255,0.12)'
+                }}
+                ref={buttonRef}
+            >
+                {text.split('').map(char=>{
+                    return <>{char}<br/></>
+                })}
 
-            {value==='owner'&&position&&
-                <Marker position={position}>
-                    <Popup>You are here</Popup>
-                </Marker>
-            }
-
-            {(value==='hos'||value==='park')&&hover&&
-                others.map((e)=>
-                    <Marker position={[e.yp-0.0003, e.xp]} icon={icon}>
-                        <Popup>
-                            {e.name}
-                            <br/>
-                            {e.category==="clinic"&&"9:30-18:30"}
-                        </Popup>
+                {value==='owner'&&position&&
+                    <Marker position={position}>
+                        <Popup>ここにおるぜ</Popup>
                     </Marker>
-                )
-            }
+                }
+
+                {(value==='hos'||value==='park')&&hover&&
+                    others.map((e)=>
+                        <Marker position={[e.yp-0.0003, e.xp]} icon={icon}>
+                            <Popup>
+                                {e.name}
+                                <br/>
+                                {e.category==="clinic"&&"9:30~18:30"}
+                            </Popup>
+                        </Marker>
+                    )
+                }
+            </div>
+            <div style={{
+                width:'40px',
+            }}>
+                {value==='owner'?<img style={{marginLeft: '8px', width: '25px'}} src='https://esm.sh/leaflet@1.9.2/dist/images/marker-icon-2x.png'/>:value==='hos'?<img src={hos}/>:value==='park'?<img src={park}/>:<img src={dog}/>}
+            </div>
         </div>
     )
 }

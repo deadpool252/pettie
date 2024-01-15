@@ -5,6 +5,7 @@ import { dogIcon, hosIcon, parkIcon } from './icon'
 import { Button } from './button'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { FaExpand } from "react-icons/fa";
 
 export default function Location () {
     const clicked = false
@@ -13,6 +14,7 @@ export default function Location () {
     const [petLocation, setPetLocation] = useState([])
     const [parkLocation, setParkLocation] = useState([])
     const [hosLocation, setHosLocation] = useState([])
+    const [showButton, setShowButton] = useState(false)
     
     useEffect(()=>{
         API.get('atHome/').then(res=>{
@@ -71,15 +73,42 @@ export default function Location () {
                     />
                     <Marker position={position} icon={dogIcon}>
                         <Popup>
-                            Dawg
+                            わんわん
                         </Popup>
                     </Marker>
-                    <div style={{position:'absolute', zIndex:'10000', right: '10px', top: '10px'}}>
-                        <Button text='Pet' value='pet' petPosition={position}/>
-                        <Button text='My Place' value='owner'/>
-                        <Button text='Hospital' value='hos' others={hosLocation} icon={hosIcon} isClick={clicked}/>
-                        <Button text='Park' value='park' others={parkLocation} icon={parkIcon}/>
-                        <div style={{
+                    <div style={{
+                        position:'absolute',
+                        zIndex:'500',
+                        right: '55px',
+                        bottom: '70px',
+                        width: "40px",
+                        height: "40px",
+                        borderRadius: "20px",
+                        border: showButton?'2px solid gray':'2px solid black',
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        backdropFilter: 'blur(2px)',
+                    }}>
+                        <FaExpand style={{width: "30px", height: "30px", transition: "1s", rotate: showButton?"0deg":"90deg", color: showButton?'gray':'black'}} onClick={()=>{setShowButton(!showButton)}}/>
+                    </div>
+                    <div style={{
+                        backdropFilter: 'blur(5px)',
+                        borderRadius: '5px',
+                        padding: '5px',
+                        position:'absolute',
+                        zIndex:'500',
+                        right: '10px',
+                        bottom: showButton?'120px':'0px',
+                        transition: "visibility 0.3s, opacity 0.3s linear, bottom 1s",
+                        visibility: showButton?"visible":"hidden",
+                        opacity: showButton?"1":"0"
+                    }}>
+                        <Button text='ペット' value='pet' petPosition={position}/>
+                        <Button text='俺' value='owner'/>
+                        <Button text='病院' value='hos' others={hosLocation} icon={hosIcon} isClick={clicked}/>
+                        <Button text='公園' value='park' others={parkLocation} icon={parkIcon}/>
+                        {/* <div style={{
                                 color: 'white',
                                 fontFamily: 'Arial, Helvetica, sans-serif',
                                 backgroundColor: '#3383FF',
@@ -91,7 +120,7 @@ export default function Location () {
                             onClick={handleClickNofi}
                         >
                             Nofi
-                        </div>
+                        </div> */}
                     </div>
                 </MapContainer>
             </div>
