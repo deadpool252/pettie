@@ -1,0 +1,101 @@
+.outframe{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-bottom: 67px;
+}
+
+.dog-icons {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;  /* 灰白底色 */
+    padding: 10px;  /* 调整内边距 */
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1); /* 添加淡灰色的阴影效果 */
+    position: fixed;
+    left: 0;
+    top: 73px;
+    width: 100%;
+    z-index: 1000; /* 确保在其他元素上层显示 */
+}
+
+.dog-icon-container {
+    text-align: center;
+    margin-right: 15px;  /* 调整间距 */
+}
+
+.dog-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.dog-icon:hover {
+    transform: scale(1.2);
+}
+
+.dog-name {
+    margin-top: 5px;  /* 调整名字和底部边框之间的垂直间距 */
+}
+
+.selected {
+    /* border: 2px solid #3498db;  选中的图标边框颜色 */
+    /* border-radius: 50%; 使边框为圆形 */
+    border-bottom: 3px solid #00796b;
+}
+
+.dog-profile-pic {
+    margin-top: 110px;
+    margin-left: 13px;
+    margin-bottom: 10px;
+}
+
+.selected-dog-image {
+    width: 150px;  /* 选中的狗狗图像宽度 */
+    height: 150px;  /* 选中的狗狗图像高度 */
+    border-radius: 50%;
+    margin-top: 10px;
+}
+
+.dog-details {
+    display: flex;
+    flex-direction: row; /* 將元素垂直排列 */
+    align-items: center;
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 12px;
+}
+
+.detail-name,
+.detail-info,
+.dog-weight,
+.dog-age {
+    text-align: center;
+    padding:10px;
+}
+
+
+.life-info-item {
+    display: flex; 
+    flex-wrap: wrap;  /* 允许內部元素換行 */
+    justify-content: space-between; /* 在主軸上均勻分布元素 */
+}
+
+.life-info-container {
+    width: 48%; /* 設置每個容器的寬度，使其在父容器中並排 */
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.memo{
+    width: 98%;
+    height: 200px; /* 设置高度 */
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    align-items: center;
+    margin: 1%;
+}

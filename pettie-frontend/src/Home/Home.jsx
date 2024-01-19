@@ -1,29 +1,25 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import './home.css'
 
-import Aos from 'aos'
-import 'aos/dist/aos.css'
-import Navbar from '../Components/Navbar/Navbar'
-import Bottomnavbar from '../Components/Navbar/Bottomnavbar'
 
-const Home = () => {
-  //react hook to add a scroll
-  //hiệu ứng lúc reload lại trang các thành phần sẽ di chuyển lên
-  useEffect(() =>{
-    Aos.init({duration: 2000})
-  })
+export default function Home () {
+  const today = new Date();
+
+  const temperature = 26;
+
   return (
     <>
-    <section className='home_container'>
-      <div>
-        
+      <div style={{marginTop: "70px"}}>
+              <div style={{ marginTop: "70px" }}>
+        <div>
+          <p>今天的日期是：{today.toDateString()}</p>
+          <p>溫度：{temperature} °C</p>
+          {/* 其他Home組件的內容 */}
+        </div>
       </div>
 
-
-    </section>
+      </div>
     
     </>
   )
 }
-
-export default Home

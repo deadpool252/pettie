@@ -19,12 +19,12 @@ const Bottomnavbar = () => {
 
           <ul className='nav-menu'>
             <li>
-              <Link  to='/'>
+              <Link  to='/home'>
                 <GrHomeRounded className='icon'/>
               </Link>
             </li>
             <li> 
-              <Link  to='#'>
+              <Link  to='/petinfo'>
                 <GrContactInfo className='icon'/>
               </Link>
             </li>
