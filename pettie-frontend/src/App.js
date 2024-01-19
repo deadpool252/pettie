@@ -8,18 +8,17 @@ import {
   Route,
 } from "react-router-dom";
 import Navbar from './Components/Navbar/Navbar'
-
 import Footer from './Components/Footer/Footer'
 import Home from './Home/Home'
 import TemperatureManagement from './TemperatureManagement/index'
 import Bottomnavbar from './Components/Navbar/Bottomnavbar'
 import Location from './Location/Location';
-
+import Petinfo from './Petinfo/petinfo'
 
 const App = () => {
   return (
     <Router>
-     <Navbar/>
+    <Navbar/>
     
         <Routes>
           {/* <Route path="/footer" element={<Footer/>} /> */}
@@ -27,8 +26,10 @@ const App = () => {
           
           {/* <Route path="/" element={<Home />} /> */}
           {/* <Route path="*" element={<NoMatch />} /> */}
-          <Route path="/" exact component={Home} />
+          <Route path="/home" element={<Home/>} />
           <Route path="/location" element={<Location/>} />
+          <Route path="/petinfo" element={<Petinfo/>} />
+
 
         </Routes>
       <Bottomnavbar/>
