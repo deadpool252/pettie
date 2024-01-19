@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, useMapEvent } from 'react-leaflet'
 import React, { useState, useEffect, useRef } from 'react'
 import API from "../api/api"
 import { dogIcon, hosIcon, parkIcon } from './icon'
@@ -6,6 +6,7 @@ import { Button } from './button'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { FaExpand } from "react-icons/fa";
+import "./location.css"
 
 export default function Location () {
     const clicked = false
@@ -15,6 +16,14 @@ export default function Location () {
     const [parkLocation, setParkLocation] = useState([])
     const [hosLocation, setHosLocation] = useState([])
     const [showButton, setShowButton] = useState(false)
+    const [userlat, setUserlat] = useState({lat: null, lng: null})
+    // const map = useMapEvents({
+    //     click: (e) => {
+    //         if(showButton){
+    //             setShowButton(false)
+    //         }
+    //     }
+    //   });
     
     useEffect(()=>{
         API.get('atHome/').then(res=>{
@@ -66,16 +75,17 @@ export default function Location () {
                 theme="light"
             />
             <div style={{width:'100%', height: '100%'}}>
-                <MapContainer style={{width:'100%', height: '100%'}} center={position} zoom={13} scrollWheelZoom={false}>
+                <MapContainer style={{width:'100%', height: '100%'}} center={position} zoom={13} scrollWheelZoom={false} onClick={(e)=>{console.log(e)}}>
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        
                     />
-                    <Marker position={position} icon={dogIcon}>
+                    {/* <Marker position={position} icon={dogIcon}>
                         <Popup>
                             わんわん
                         </Popup>
-                    </Marker>
+                    </Marker> */}
                     <div style={{
                         position:'absolute',
                         zIndex:'500',
@@ -104,10 +114,10 @@ export default function Location () {
                         visibility: showButton?"visible":"hidden",
                         opacity: showButton?"1":"0"
                     }}>
-                        <Button text='ペット' value='pet' petPosition={position}/>
-                        <Button text='俺' value='owner'/>
-                        <Button text='病院' value='hos' others={hosLocation} icon={hosIcon} isClick={clicked}/>
-                        <Button text='公園' value='park' others={parkLocation} icon={parkIcon}/>
+                        <Button text='ペット' value='pet' petPosition={position} icon={dogIcon} userlat={userlat}/>
+                        <Button text='俺' value='owner' userlat={userlat} setUserlat={setUserlat}/>
+                        <Button text='病院' value='hos' others={hosLocation} icon={hosIcon} isClick={clicked} userlat={userlat}/>
+                        <Button text='公園' value='park' others={parkLocation} icon={parkIcon} userlat={userlat}/>
                         {/* <div style={{
                                 color: 'white',
                                 fontFamily: 'Arial, Helvetica, sans-serif',
