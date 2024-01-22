@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 
+const apiKey = 'c882cb573fc5fac09149beea8d9b6503';
+
+
+
 const weatherMainTranslation = {
   'Clear': '晴れ',
   'Clouds': '曇り',
@@ -16,11 +20,11 @@ const weatherMainTranslation = {
 function Weather({city_name}) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(()=>{
-    fetch(`${process.env.REACT_APP_OW_API_URL}/weather/?q=${city_name}&APPID=${process.env.REACT_APP_OW_API_KEY}&units=metric`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=${apiKey}&units=metric`)
     .then(res => res.json())
     .then(result => {
-      console.log(result);
       setData(result);
       setLoading(false);
     })
@@ -35,11 +39,12 @@ function Weather({city_name}) {
       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
     </svg></div>;
   }
+  const iconUrl = `https://openweathermap.org/img/w/${data.weather[0].icon}.png`;
     return (
       <div className="w-5/6">
         <div className="flex items-center justify-center bg-gradient-to-r from-blue-500 to-blue-300
                       h-28 rounded-xl shadow-lg
-                      transform hover:scale-110 transition-transform
+                     
                       text-[#FFF5E1] relative">           
           <div className="w-full px-8 absolute top-6">
             <div className="flex justify-between flex items-start">
@@ -64,9 +69,7 @@ function Weather({city_name}) {
               </div>
 
               <div className='mt-[-25px]'>
-                <img className='w-[45px] h-[45px]' src={`${process.env.REACT_APP_OW_ICON_URL}/${data.weather[0].icon}.png`} 
-                  alt={data.weather[0].description}
-                />
+              <img className='w-[45px] h-[45px]' src={iconUrl} alt="Weather Icon" />
 
                 <p className='flex items-center justify-center text-[15px]'>
                   {weatherMainTranslation[data.weather[0].main] || data.weather[0].main}
