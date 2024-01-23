@@ -15,7 +15,7 @@ const dogs = [
     lastCheckup: '2023-01-15', // 最後一次健診時間
     clinic: 'PetCare Hospital', // 健診醫院名  
     birth:'2012/12/12',
-    love:'xghjgh',
+    love:'イも🍞',
     hate:'x',
     walk:'x',
     eat:'x',

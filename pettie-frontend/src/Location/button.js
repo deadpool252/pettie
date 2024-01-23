@@ -3,24 +3,54 @@ import { useState, useEffect, useRef } from "react"
 import dog from "../img/dog.png"
 import hos from "../img/hos.png"
 import park from "../img/park.png"
-import { MapLayer } from "react-leaflet";
 import L from "leaflet";
 import "leaflet-routing-machine";
 
-export const Button = ({text, value=null, petPosition=null, others=[], icon=null, isClick=null, userlat=null, setUserlat=null})=>{
+export const Button = ({text, value=null, petPosition=null, others=[], icon=null, userlat=null, setUserlat=null, to=null, routing=null, setRouting=null})=>{
     const map = useMap()
     const intvl = useRef(null)
-    const buttonRef = useRef(null)
     const [position, setPosition] = useState(null)
     const [hover, setHover] = useState(false)
     const [selectedId, setSelectedId] = useState(null)
-    const [routing, setRouting] = useState(null)
 
     useEffect(() => {
-        if(value==='hos'&&isClick){
-            buttonRef.current.click()
+        if(((value==='hos'&&to==="hos")||(value==='park'&&to==="park"))&&others.length>0){
+            setHover(true)
+            if(routing!=null){map.removeControl(routing)}
+            if(value==='hos'){
+                flyTo(others[1].yp,others[1].xp)
+                setSelectedId(12)
+            }else{
+                flyTo(others[3].yp,others[3].xp)
+                setSelectedId(4)
+            }
         }
-    }, [userlat, others]);
+    }, [to, userlat, others]);
+    const flyTo = (lat, lng) =>{
+        map.flyTo({lat: (lat+userlat.lat)/2, lng: (lng+userlat.lng)/2}, map.getZoom())
+        setRouting(L.Routing.control({
+            waypoints: [
+            L.latLng(userlat.lat, userlat.lng),
+            L.latLng(lat, lng)
+            ],
+            lineOptions: {
+            styles: [
+                {
+                color: "blue",
+                opacity: 0.6,
+                weight: 4
+                }
+            ]
+            },
+            addWaypoints: false,
+            draggableWaypoints: false,
+            fitSelectedRoutes: false,
+            showAlternatives: false,
+            routeWhileDragging: true,
+            show: false,
+            createMarker: function() { return null; }
+        }).addTo(map))
+    }
 
     useEffect(() => {
         if(value==='owner'){
@@ -55,7 +85,6 @@ export const Button = ({text, value=null, petPosition=null, others=[], icon=null
     }
 
     const handleClickOthers = () => {
-        console.log(others)
         if(hover){
             setHover(!hover)
             if(value=="hos"&&routing){
@@ -85,34 +114,34 @@ export const Button = ({text, value=null, petPosition=null, others=[], icon=null
             if(routing!=null){map.removeControl(routing)}
             if(value==='pet'){
                 setRouting(L.Routing.control({
-                    waypoints: [
-                    L.latLng(userlat.lat, userlat.lng),
-                    L.latLng(petPosition[0], petPosition[1])
-                    ],
-                    lineOptions: {
-                    styles: [
-                        {
-                        color: "blue",
-                        opacity: 0.6,
-                        weight: 4
-                        }
-                    ]
-                    },
-                    addWaypoints: false,
-                    draggableWaypoints: false,
-                    fitSelectedRoutes: false,
-                    showAlternatives: false,
-                    routeWhileDragging: true,
-                    show: false,
-                    createMarker: function() { return null; }
-                }).addTo(map)
-            )
+                        waypoints: [
+                        L.latLng(userlat.lat, userlat.lng),
+                        L.latLng(petPosition[0], petPosition[1])
+                        ],
+                        lineOptions: {
+                        styles: [
+                            {
+                            color: "blue",
+                            opacity: 0.6,
+                            weight: 4
+                            }
+                        ]
+                        },
+                        addWaypoints: false,
+                        draggableWaypoints: false,
+                        fitSelectedRoutes: false,
+                        showAlternatives: false,
+                        routeWhileDragging: true,
+                        show: false,
+                        createMarker: function() { return null; }
+                    }).addTo(map)
+                )
             }else{
                 let clickedLocaton = others.find(e=>e.id===id)
                 setRouting(L.Routing.control({
                         waypoints: [
                         L.latLng(userlat.lat, userlat.lng),
-                        L.latLng(clickedLocaton.yp-0.0003, clickedLocaton.xp)
+                        L.latLng(clickedLocaton.yp, clickedLocaton.xp)
                         ],
                         lineOptions: {
                         styles: [
@@ -134,6 +163,7 @@ export const Button = ({text, value=null, petPosition=null, others=[], icon=null
                 )
             }
         }
+        
     }
 
     return (
@@ -154,7 +184,6 @@ export const Button = ({text, value=null, petPosition=null, others=[], icon=null
                     borderRadius: '5px',
                     boxShadow: hover ? 'inset 0 0.6em 2em -0.3em rgba(0,0,0,0.15),inset 0 0 0em 0.05em rgba(255,255,255,0.12)' : 'inset 0 -0.6em 1em -0.35em rgba(0,0,0,0.17),inset 0 0.6em 2em -0.3em rgba(255,255,255,0.15),inset 0 0 0em 0.05em rgba(255,255,255,0.12)'
                 }}
-                ref={buttonRef}
             >
                 {text.split('').map(char=>{
                     return <>{char}<br/></>
@@ -175,7 +204,6 @@ export const Button = ({text, value=null, petPosition=null, others=[], icon=null
                                     borderRadius: '5px',
                                     boxShadow: 'inset 0 -0.6em 1em -0.35em rgba(0,0,0,0.17),inset 0 0.6em 2em -0.3em rgba(255,255,255,0.15),inset 0 0 0em 0.05em rgba(255,255,255,0.12)'
                                 }}
-                                // onClick={handleClickFinding(e.id)}
                                 onClick={(a)=>{
                                     a.stopPropagation()
                                     map.closePopup()
@@ -193,7 +221,7 @@ export const Button = ({text, value=null, petPosition=null, others=[], icon=null
                 }
 
                 {(value==='hos'||value==='park')&&hover&&
-                    others.map((e)=>
+                    others.map((e, i)=>
                         <Marker position={[e.yp-0.0003, e.xp]} icon={icon} >
                             <Popup>
                                 {e.name}

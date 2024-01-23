@@ -41,7 +41,7 @@ function Weather({city_name}) {
   }
   const iconUrl = `https://openweathermap.org/img/w/${data.weather[0].icon}.png`;
     return (
-      <div className="w-5/6">
+      <div className="w-5/6  shadow-lg rounded-xl">
         <div className="flex items-center justify-center bg-gradient-to-r from-blue-500 to-blue-300
                       h-28 rounded-xl shadow-lg
                      

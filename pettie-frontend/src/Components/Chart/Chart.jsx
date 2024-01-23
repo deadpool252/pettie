@@ -23,11 +23,13 @@ ChartJS.register(
   Legend
 );
 
-const generateBodyTemperatureData = () => {
-  return Array.from({ length: 60 }, () => Math.floor(Math.random() * 6) + 35);
-};
+const currentDate = new Date().getDate();
+const currentMonth = new Date().getMonth();
+const currentYear = new Date().getFullYear();
+const lastDayCurrentMonth = new Date(currentYear, currentMonth+1, 0).getDate()
+const lastDayLastMonth = new Date(currentYear, currentMonth, 0).getDate()
 
-const labels = Array.from({ length: 13 }, (_, index) => `${index * 5}秒 `);
+const labels = Array.from({ length: 13 }, (_, index) => currentDate>=13?`${currentDate-12+index}日`:(currentDate-12+index)>0?`${currentDate-12+index}日`:`${currentDate-12+index+lastDayLastMonth}日`);
 
 
 const options = {
@@ -37,42 +39,40 @@ const options = {
       position: 'top',
     },
     title: {
-      display: true,
-      text: 'Temperature Chart per Minute',
+      display: false,
     },
   },
   scales: {
     y: {
-      suggestedMin: 35,
+      suggestedMin: 37,
       suggestedMax: 40,
     },
-  },
+  }
 };
 
-const Chart = () => {
-  const [bodyTemperatureData, setBodyTemperatureData] = useState(generateBodyTemperatureData);
+const Chart = ({tempData=[]}) => {
+  const [filterDataForDay, setFilterDataForDay] = useState([])
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setBodyTemperatureData(generateBodyTemperatureData);
-    }, 5 * 1000); // Cập nhật mỗi 5 phút
+  useEffect(()=>{
+    const d = tempData.filter(d=>d.temperature>=38.2&&d.temperature<38.6).slice(0,13)
+    d.map((d)=>{
+      filterDataForDay.push(d.temperature)
+    })
+  },[])
 
-    return () => clearInterval(interval);
-  }, []); // Chạy chỉ một lần khi component mount
-
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: 'Body Temperature',
-        data: bodyTemperatureData,
-        borderColor: 'rgb(255, 205, 86)',
-        backgroundColor: 'rgba(255, 205, 86, 0.5)',
-      },
-    ],
-  };
-
-  return <Line options={options} data={data} />;
+  return <>
+      <Line options={options} data={{
+        labels,
+        datasets: [
+          {
+            label: '平均体温',
+            data: filterDataForDay,
+            borderColor: 'rgb(255, 205, 86)',
+            backgroundColor: 'rgba(255, 205, 86, 0.5)',
+          },
+        ],
+      }} />
+    </>;
 };
 
 export default Chart;

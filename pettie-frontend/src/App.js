@@ -28,6 +28,7 @@ const App = () => {
           {/* <Route path="*" element={<NoMatch />} /> */}
           <Route path="/home" element={<Home/>} />
           <Route path="/location" element={<Location/>} />
+          <Route path="/location/:to" element={<Location/>} />
           <Route path="/petinfo" element={<Petinfo/>} />
 
 

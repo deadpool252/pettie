@@ -33,7 +33,7 @@ const Navbar = () => {
         <div className="navbar">
 
           <Link to="#" className='menu_bars'>
-            <FaBars onClick={showSidebar} size={25} className='icon'/>
+            <FaBars size={25} className='icon'/>
           </Link>
         </div>
         {/* </IconContext.Provider> */}

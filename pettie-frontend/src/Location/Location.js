@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Marker, Popup, useMapEvent } from 'react-leaflet'
+import { MapContainer, TileLayer } from 'react-leaflet'
 import React, { useState, useEffect, useRef } from 'react'
 import API from "../api/api"
 import { dogIcon, hosIcon, parkIcon } from './icon'
@@ -7,9 +7,10 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { FaExpand } from "react-icons/fa";
 import "./location.css"
+import { useParams } from 'react-router-dom';
 
 export default function Location () {
-    const clicked = false
+    const { to } = useParams();
     const [index, setIndex] = useState(1)
     const [position, setPosition] = useState(null)
     const [petLocation, setPetLocation] = useState([])
@@ -17,13 +18,12 @@ export default function Location () {
     const [hosLocation, setHosLocation] = useState([])
     const [showButton, setShowButton] = useState(false)
     const [userlat, setUserlat] = useState({lat: null, lng: null})
-    // const map = useMapEvents({
-    //     click: (e) => {
-    //         if(showButton){
-    //             setShowButton(false)
-    //         }
+    const [routing, setRouting] = useState(null)
+    // useEffect(()=>{
+    //     if(to){
+    //         setShowButton(true)
     //     }
-    //   });
+    // },[])
     
     useEffect(()=>{
         API.get('atHome/').then(res=>{
@@ -75,7 +75,7 @@ export default function Location () {
                 theme="light"
             />
             <div style={{width:'100%', height: '100%'}}>
-                <MapContainer style={{width:'100%', height: '100%'}} center={position} zoom={13} scrollWheelZoom={false} onClick={(e)=>{console.log(e)}}>
+                <MapContainer style={{width:'100%', height: '100%'}} center={position} zoom={to?16:13} scrollWheelZoom={false} onClick={(e)=>{console.log(e)}}>
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -99,8 +99,10 @@ export default function Location () {
                         justifyContent: "center",
                         alignItems: "center",
                         backdropFilter: 'blur(2px)',
-                    }}>
-                        <FaExpand style={{width: "30px", height: "30px", transition: "1s", rotate: showButton?"0deg":"90deg", color: showButton?'gray':'black'}} onClick={()=>{setShowButton(!showButton)}}/>
+                    }}
+                    onClick={()=>{setShowButton(!showButton)}}
+                    >
+                        <FaExpand style={{width: "30px", height: "30px", transition: "1s", rotate: showButton?"0deg":"90deg", color: showButton?'gray':'black'}}/>
                     </div>
                     <div style={{
                         backdropFilter: 'blur(5px)',
@@ -114,10 +116,10 @@ export default function Location () {
                         visibility: showButton?"visible":"hidden",
                         opacity: showButton?"1":"0"
                     }}>
-                        <Button text='ペット' value='pet' petPosition={position} icon={dogIcon} userlat={userlat}/>
+                        <Button text='ペット' value='pet' petPosition={position} icon={dogIcon} userlat={userlat} routing={routing} setRouting={setRouting}/>
                         <Button text='俺' value='owner' userlat={userlat} setUserlat={setUserlat}/>
-                        <Button text='病院' value='hos' others={hosLocation} icon={hosIcon} isClick={clicked} userlat={userlat}/>
-                        <Button text='公園' value='park' others={parkLocation} icon={parkIcon} userlat={userlat}/>
+                        <Button text='病院' value='hos' others={hosLocation} icon={hosIcon} userlat={userlat} to={to} routing={routing} setRouting={setRouting}/>
+                        <Button text='公園' value='park' others={parkLocation} icon={parkIcon} userlat={userlat} to={to} routing={routing} setRouting={setRouting}/>
                         {/* <div style={{
                                 color: 'white',
                                 fontFamily: 'Arial, Helvetica, sans-serif',
