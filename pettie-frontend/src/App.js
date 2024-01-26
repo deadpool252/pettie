@@ -14,6 +14,10 @@ import TemperatureManagement from './TemperatureManagement/index'
 import Bottomnavbar from './Components/Navbar/Bottomnavbar'
 import Location from './Location/Location';
 import Petinfo from './Petinfo/petinfo'
+import ApexCharts from './Home/ApexChart';
+import Calories from './Home/Calories';
+import Bettery from './Home/Bettery';
+
 
 const App = () => {
   return (
@@ -30,7 +34,9 @@ const App = () => {
           <Route path="/location" element={<Location/>} />
           <Route path="/location/:to" element={<Location/>} />
           <Route path="/petinfo" element={<Petinfo/>} />
-
+          <Route path="/apexchart" element={<ApexCharts/>} />
+          <Route path="/calories" element={<Calories/>} />
+          <Route path="/bettery" element={<Bettery/>} />
 
         </Routes>
       <Bottomnavbar/>
