@@ -55,8 +55,8 @@ export const Button = ({text, value=null, petPosition=null, others=[], icon=null
     useEffect(() => {
         if(value==='owner'){
             map.locate().on("locationfound", (e)=>{
-                setPosition(e.latlng)
-                setUserlat(e.latlng)
+                setPosition([34.7063425,135.5034314])
+                setUserlat({lat: 34.7063425, lng: 135.5034314})
             })
         }
     }, [map])
@@ -71,8 +71,8 @@ export const Button = ({text, value=null, petPosition=null, others=[], icon=null
     const handleClickOwner = () => {
         setHover(true)
         map.locate().on("locationfound", (e)=>{
-            setPosition(e.latlng)
-            map.flyTo(e.latlng, map.getZoom())
+            setPosition([34.7063425,135.5034314])
+            map.flyTo([34.7063425,135.5034314], map.getZoom())
             
         })
         setHoverToFalse()

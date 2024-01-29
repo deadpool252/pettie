@@ -35,7 +35,9 @@ export default function Home () {
 
         <div className='status' style={{marginTop:"120px"}}>
           <ApexChart/>
+          <hr/>
           <Calories/>
+          <hr/>
           <Bettery/>
           {/* 體溫 心律 */}
           </div>

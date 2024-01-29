@@ -4,7 +4,7 @@ import Chart from 'react-apexcharts';
 export default function Calories () {
     const [chartData, setChartData] = useState({
         series: [
-          { name: '歩数', data: [5, 3, 9, 12, 8, 45, 80, 120, 500, 390, 690, 250, 383,] },
+          { name: '歩数', data: [5, 3, 9, 400, 320, 45, 80, 120, 500, 390, 205, 40, 0] },
         //   { name: 'Revenue', data: [76, 85, 101, 98, 87, 105, 91, 114, 94] },
         //   { name: 'Free Cash Flow', data: [35, 41, 36, 26, 45, 48, 52, 53, 41] },
         ],
@@ -29,7 +29,7 @@ export default function Calories () {
             colors: ['transparent'],
           },
           xaxis: {
-            categories: ['0時', '1時', '2時', '3時', '4時', '5時', '6時', '7時', '8時', '9時', '10時', '11時', '12時','13時','14時','15時','16時','17時','18時','19時','20時','21時','22時','23時'],
+            categories: ['0時', '2時', '4時', '6時', '8時', '10時', '12時', '14時','16時','18時','20時','22時',],
           },
           yaxis: {
             title: {

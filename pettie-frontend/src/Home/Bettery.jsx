@@ -35,7 +35,7 @@ export default function Bettery () {
               floating: true,
               offsetX: -10,
               offsetY: 5,
-              text: 'Lucky Bettery'
+              text: 'Lucky Battery'
             },
             subtitle: {
               floating: true,
@@ -72,7 +72,7 @@ export default function Bettery () {
     return(
         <div>
             <div id="progress1">
-            <Chart options={{}} series={[]} type="bar" height={70} />
+            {/* <Chart options={{}} series={[]} type="bar" height={70} /> */}
             </div>
             <div id="html-dist"></div>
         </div>
